@@ -1,121 +1,83 @@
-# Route API Project
+# Route Finder with A* Algorithm
 
-Este projeto consiste em uma API que calcula a menor rota entre vários lugares usando o OpenStreetMap e FastAPI.
+## Project Description
 
-## **Tutorial: Como Rodar o Projeto da API de Menor Rota**
+This project is a route finding application using the A* algorithm, specifically designed for João Pessoa, Paraíba, Brazil. The application provides a web interface to calculate routes between two locations using geographical data.
 
-Este tutorial descreve como configurar e rodar o projeto da API de menor rota entre locais usando FastAPI e outras bibliotecas em Python.
+![Image](https://github.com/user-attachments/assets/cf9940f7-93aa-48e7-9b53-4b05c8b4bdd4)
 
-### **1. Clonar o Repositório**
+## Project Structure
 
-Primeiro, clone o repositório do projeto (caso ainda não tenha feito isso):
-
-```bash
-git clone https://github.com/usuario/route-api.git
-cd route-api
+```
+.
+├── app.py                  # Streamlit web application
+├── data/
+│   ├── joao_pessoa_edges.csv   # Graph edges data
+│   └── joao_pessoa_nodes.csv   # Nodes geographical data
+├── generate_csvs_script.py # Script to generate CSV files
+├── README.MD               # Project documentation
+├── requirements.txt        # Python dependencies
+└── src/
+    ├── api.py              # FastAPI route calculation endpoint
+    ├── AStar.py            # A* algorithm implementation
+    └── __init__.py         # Package initialization
 ```
 
-Substitua `usuario` pelo nome de usuário correto no GitHub, caso seja necessário.
+## Prerequisites
 
-### **2. Configurar o Ambiente Virtual**
+- Python 3.8+
+- pip
 
-Recomendamos criar um ambiente virtual para instalar as dependências do projeto e garantir que elas não interfiram em outros projetos:
+## Installation
 
-```bash
-# Criar um ambiente virtual
-python -m venv venv
-
-# Ativar o ambiente virtual
-# No Windows
-venv\Scripts\activate
-# No Linux/macOS
-source venv/bin/activate
-```
-
-### **3. Instalar as Dependências**
-
-Com o ambiente virtual ativado, instale as dependências listadas no arquivo `requirements.txt`:
-
+1. Clone the repository
+2. Install dependencies:
 ```bash
 pip install -r requirements.txt
 ```
 
-Esse comando irá instalar as bibliotecas necessárias, como `fastapi`, `uvicorn`, `osmnx`, `networkx`, e `geopy`.
+## Running the Application
 
-### **4. Rodar o Servidor**
-
-Para rodar o servidor da API, use o `uvicorn`. Execute o comando abaixo para iniciar o servidor localmente:
-
+### API Only
+To run only the FastAPI server:
 ```bash
-uvicorn app.main:app --reload
+uvicorn src:app --reload
 ```
 
-A flag `--reload` garante que o servidor seja recarregado automaticamente sempre que você modificar o código.
-
-### **5. Acessar a Documentação da API**
-
-Após rodar o servidor, você pode acessar a documentação interativa da API no seguinte endereço:
-
-[http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
-
-Essa página foi gerada automaticamente pelo FastAPI e permite testar as rotas diretamente do navegador.
-
-### **6. Testar a API**
-
-#### Endpoint: `POST /shortest-route`
-
-Este endpoint recebe uma lista de locais e retorna a menor rota entre eles.
-
-**Exemplo de corpo da requisição:**
-```json
-{
-  "locations": ["São Paulo, SP", "Rio de Janeiro, RJ", "Belo Horizonte, MG"]
-}
+### Web Application
+To run the full Streamlit web app:
+```bash
+streamlit run app.py
 ```
 
-A resposta será algo como:
+## Key Features
 
-```json
-{
-  "route": [
-    [-23.55052, -46.633308],
-    [-22.908333, -43.196388]
-  ],
-  "distance": 440.5
-}
-```
+- Uses A* pathfinding algorithm
+- Geocoding with OSMnx
+- Interactive map visualization
+- Supports locations in João Pessoa, Brazil
 
-A lista de coordenadas `route` contém a rota otimizada entre os locais fornecidos e a distância total da rota em quilômetros.
+## Technologies Used
 
-## **7. Parar o Servidor**
+- FastAPI
+- Streamlit
+- OSMnx
+- Folium
+- Haversine distance calculation
 
-Para parar o servidor, basta pressionar `Ctrl+C` no terminal onde o servidor está rodando.
+## Limitations
 
-## **8. Dúvidas ou Problemas?**
+- Currently supports only João Pessoa locations
+- Does not consider street orientation
+- Relies on network graph within 100m of start/end points
 
-Caso você tenha alguma dúvida ou problema, consulte a documentação do FastAPI ou abra uma issue no repositório para que possamos ajudar.
+## Algorithm Details
 
----
+The A* algorithm is implemented using:
+- Haversine distance as the heuristic function
+- Graph representation of city network
+- Efficient path finding with minimal computational complexity
 
-### **Estrutura do Projeto**
-Se você quiser explorar a estrutura do projeto, ela será organizada da seguinte forma:
+## License
 
-```
-my_route_api/
-├── app/
-│   ├── __init__.py
-│   ├── main.py           # Arquivo principal para rodar o servidor FastAPI
-│   ├── models.py         # Definições dos modelos de dados (ex. Request)
-│   ├── routes.py         # Definição das rotas da API
-│   └── utils.py          # Funções auxiliares, se necessário (ex. funções de geocodificação)
-├── requirements.txt      # Dependências do projeto
-├── README.md             # Documentação do projeto
-└── .gitignore            # Arquivo para ignorar arquivos desnecessários no git
-```
-
-Com isso, você está pronto para testar e usar a API para calcular a menor rota entre diferentes locais.
-
---- 
-
-Essa é a documentação completa para rodar o projeto da API. Se precisar de mais alguma coisa, é só me chamar!
-
+MIT License
