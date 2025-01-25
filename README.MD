@@ -1,4 +1,5 @@
 # Route Finder with A* Algorithm
+[![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
 ## Project Description
 
@@ -80,4 +81,4 @@ The A* algorithm is implemented using:
 
 ## License
 
-MIT License
+This project is licensed under the [MIT License](LICENSE).
