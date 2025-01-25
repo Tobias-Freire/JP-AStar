@@ -12,7 +12,7 @@ EDGES_FILE = os.path.join(BASE_DIR, "../data/joao_pessoa_edges.csv")
 
 @app.get("/")
 def home():
-    return {"message": "Bem-vindo à API de cálculo de rota! Use o endpoint /findPath para encontrar um caminho."}
+    return {"message": "Welcome to the route calculation API! Use the /findPath endpoint to find a path."}
 
 
 @app.get("/findPath")
@@ -34,11 +34,11 @@ def find_path(start_loc: str, end_loc: str):
         nodes = load_nodes(NODES_FILE)
         edges = load_edges(EDGES_FILE)
     except FileNotFoundError as e:
-        raise HTTPException(status_code=500, detail=f"Erro ao carregar os arquivos: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Error loading archives: {str(e)}")
 
     # Verify if the nodes exist
     if start_node_id not in nodes or end_node_id not in nodes:
-        raise HTTPException(status_code=404, detail="Um ou ambos os nós fornecidos não existem nos dados carregados.")
+        raise HTTPException(status_code=404, detail="One or both of the given nodes do not exist in the loaded data.")
 
     # Execute A* algorithm
     path, cost = a_star(edges, nodes, start_node_id, end_node_id)
@@ -46,4 +46,4 @@ def find_path(start_loc: str, end_loc: str):
     if path:
         return {"locations": [start_loc, end_loc], "locations_nodes_id": {start_localization, end_localization},"path": path, "cost": cost}
     else:
-        raise HTTPException(status_code=404, detail="Não foi encontrado um caminho entre os nós fornecidos.")
+        raise HTTPException(status_code=404, detail="A path was not found between the given nodes.")
